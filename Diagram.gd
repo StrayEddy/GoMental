@@ -10,6 +10,7 @@ func _ready():
 
 func neuron_is_selected(neuron):
 	selected_neuron = neuron
+	$SearchBar.show()
 	put_focus_on_line_edit()
 
 func put_focus_on_line_edit():

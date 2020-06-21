@@ -12,3 +12,4 @@ func _on_LineEdit_focus_exited():
 func _on_LineEdit_text_entered(new_text):
 	clear()
 	Global.diagram.add_neuron(new_text)
+	get_parent().hide()

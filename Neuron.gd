@@ -44,14 +44,17 @@ func selected():
 	emit_signal("is_selected", self)
 
 func _on_Area2D_mouse_entered():
-	$CircleSprite.self_modulate = Color(.5,.5,.5)
-	$CircleSprite/PlusSprite.self_modulate = Color(1,1,1)
-
-func _on_Area2D_mouse_exited():
 	$CircleSprite.self_modulate = Color(1,1,1)
 	$CircleSprite/PlusSprite.self_modulate = Color(0,0,0)
+	$CircleSprite/CenterContainer/Label.set("custom_colors/font_color", Color(0,0,0))
+
+func _on_Area2D_mouse_exited():
+	$CircleSprite.self_modulate = Color(0.5,0.5,0.5)
+	$CircleSprite/PlusSprite.self_modulate = Color(1,1,1)
+	$CircleSprite/CenterContainer/Label.set("custom_colors/font_color", Color(1,1,1))
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
+	get_tree().set_input_as_handled()
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_LEFT and event.pressed:
 			dragging = true

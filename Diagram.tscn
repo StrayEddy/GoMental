@@ -20,3 +20,4 @@ centered = false
 position = Vector2( 256, 300 )
 
 [node name="SearchBar" parent="." instance=ExtResource( 4 )]
+visible = false

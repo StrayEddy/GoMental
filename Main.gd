@@ -1,5 +1,5 @@
 extends Node
 
-func _input(event):
-	if event.is_action_pressed("ui_cancel"):
+func _unhandled_input(event):
+	if Input.is_key_pressed(KEY_ESCAPE):
 		get_tree().quit()
