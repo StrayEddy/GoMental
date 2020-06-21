@@ -3,82 +3,20 @@
 [ext_resource path="res://assets/white.png" type="Texture" id=1]
 [ext_resource path="res://Neuron.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Diagram.gd" type="Script" id=3]
-[ext_resource path="res://LineEdit.gd" type="Script" id=4]
+[ext_resource path="res://SearchBar.tscn" type="PackedScene" id=4]
 
-[node name="Diagram" type="Node2D"]
+[node name="Diagram" type="Node2D" groups=[
+"Diagram",
+]]
 script = ExtResource( 3 )
 
 [node name="Background" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 1 )
+z_index = -2
 texture = ExtResource( 1 )
 centered = false
 
-[node name="Neuron" parent="." instance=ExtResource( 2 )]
+[node name="MainNeuron" parent="." instance=ExtResource( 2 )]
 position = Vector2( 256, 300 )
 
-[node name="GridContainer" type="GridContainer" parent="."]
-margin_right = 500.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-columns = 6
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="LineEdit" type="LineEdit" parent="GridContainer"]
-margin_right = 80.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-script = ExtResource( 4 )
-
-[node name="RichTextLabel" type="RichTextLabel" parent="GridContainer"]
-margin_left = 84.0
-margin_right = 164.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "Test"
-text = "Test"
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="GridContainer"]
-margin_left = 168.0
-margin_right = 248.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "Test"
-text = "Test"
-
-[node name="RichTextLabel3" type="RichTextLabel" parent="GridContainer"]
-margin_left = 252.0
-margin_right = 332.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "Test"
-text = "Test"
-
-[node name="RichTextLabel4" type="RichTextLabel" parent="GridContainer"]
-margin_left = 336.0
-margin_right = 416.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "Test"
-text = "Test"
-
-[node name="RichTextLabel5" type="RichTextLabel" parent="GridContainer"]
-margin_left = 420.0
-margin_right = 500.0
-margin_bottom = 40.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-bbcode_enabled = true
-bbcode_text = "Test"
-text = "Test"
-[connection signal="text_entered" from="GridContainer/LineEdit" to="." method="_on_LineEdit_text_entered"]
+[node name="SearchBar" parent="." instance=ExtResource( 4 )]
