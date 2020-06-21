@@ -24,61 +24,37 @@ class TermSearcher:
 var terms = [
 	{
 		"label": "",
-		"suggestions": [
-			{"label":"anxiete", "count":10},
-			{"label":"bipolarite", "count":2}
-		]
-	},
-	{
-		"label": "anxiete",
-		"suggestions": [
-			{"label":"meditation", "count":4},
-			{"label":"relaxation", "count":6}
-		]
-	},
-	{
-		"label": "bipolarite",
-		"suggestions": [
-			{"label":"journal humeur", "count":1}
-		]
-	},
-	{
-		"label": "meditation",
-		"suggestions": []
-	},
-	{
-		"label": "relaxation",
-		"suggestions": []
-	},
-	{
-		"label": "journal humeur",
 		"suggestions": []
 	}
 ]
 
 func search_terms_containing_label(label):
-	var close_terms = []
-	
 	if label == "":
 		return terms
-	
-	for term in terms:
-		if term.label == "":
-			continue
+	else:
+		var close_terms = []
 		
-		if label in term.label:
-			close_terms.append(term)
-	
-	return close_terms
+		for term in terms:
+			if label in term.label:
+				close_terms.append(term)
+		
+		return close_terms
 
 func get_term(label):
 	terms.sort_custom(TermSorter, "sort_by_label")
-	return search_terms_containing_label(label)[0]
+	var search_terms = search_terms_containing_label(label)
+	if search_terms.size() > 0:
+		return search_terms[0]
+	else:
+		return null
 
 func get_suggestions(label):
 	var term = get_term(label)
-	term.suggestions.sort_custom(SuggestionSorter, "sort_by_count")
-	return term.suggestions
+	if term == null:
+		return []
+	else:
+		term.suggestions.sort_custom(SuggestionSorter, "sort_by_count")
+		return term.suggestions
 
 func add_term(new_label):
 	var term = get_term(new_label)
