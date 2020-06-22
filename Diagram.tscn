@@ -21,7 +21,7 @@ script = ExtResource( 5 )
 [node name="Camera2D" type="Camera2D" parent="Background"]
 rotation = -3.14159
 scale = Vector2( 28.2858, -428.67 )
-anchor_mode = 0
+offset = Vector2( 250, 300 )
 current = true
 
 [node name="MainNeuron" parent="." instance=ExtResource( 2 )]
