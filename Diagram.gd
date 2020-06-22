@@ -1,8 +1,11 @@
 extends Node2D
 
+const ZOOM_SENSITIVITY = Vector2(.05, .05)
+
 var neuron_scene = load("res://Neuron.tscn")
 var connexion_scene = load("res://Connexion.tscn")
 var selected_neuron
+
 
 func _ready():
 	selected_neuron = $MainNeuron
@@ -10,14 +13,14 @@ func _ready():
 
 func neuron_is_selected(neuron):
 	selected_neuron = neuron
-	$SearchBar.show()
+	$CanvasLayer/SearchBar.show()
 	put_focus_on_line_edit()
 
 func put_focus_on_line_edit():
-	$SearchBar/LineEdit.clear()
-	$SearchBar/LineEdit.grab_focus()
+	$CanvasLayer/SearchBar/LineEdit.clear()
+	$CanvasLayer/SearchBar/LineEdit.grab_focus()
 	var suggestions = SearchEngine.get_suggestions(selected_neuron.get_label())
-	$SearchBar.set_suggestions(suggestions)
+	$CanvasLayer/SearchBar.set_suggestions(suggestions)
 
 func add_neuron(text):
 	# Add neuron
@@ -41,3 +44,10 @@ func create_connection_with(neuron):
 	connexion.set_first_neuron(neuron)
 	connexion.set_second_neuron(selected_neuron)
 	add_child(connexion)
+
+func _input(event):
+	if event is InputEventMouseButton:
+		if event.button_index == BUTTON_WHEEL_UP and event.pressed:
+			$Background/Camera2D.zoom += ZOOM_SENSITIVITY
+		elif event.button_index == BUTTON_WHEEL_DOWN and event.pressed:
+			$Background/Camera2D.zoom -= ZOOM_SENSITIVITY 

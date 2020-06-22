@@ -3,7 +3,9 @@ extends Node2D
 signal is_selected(neuron)
 signal is_moving(position)
 
+var mousein = false
 var dragging = false
+var mousePos
 var father = null
 
 
@@ -12,8 +14,10 @@ func _ready():
 
 func _process(delta):
 	if dragging:
-		var mousepos = get_viewport().get_mouse_position()
-		self.position = Vector2(mousepos.x, mousepos.y)
+		var newMousePos = get_viewport().get_mouse_position()
+		var deltaPos = newMousePos - mousePos
+		self.position += deltaPos
+		mousePos = newMousePos
 		emit_signal("is_moving", self.position)
 
 func get_label():
@@ -44,21 +48,21 @@ func selected():
 	emit_signal("is_selected", self)
 
 func _on_Area2D_mouse_entered():
+	mousein = true
 	$CircleSprite.self_modulate = Color(1,1,1)
 	$CircleSprite/PlusSprite.self_modulate = Color(0,0,0)
 	$CircleSprite/CenterContainer/Label.set("custom_colors/font_color", Color(0,0,0))
 
 func _on_Area2D_mouse_exited():
+	mousein = false
 	$CircleSprite.self_modulate = Color(0.5,0.5,0.5)
 	$CircleSprite/PlusSprite.self_modulate = Color(1,1,1)
 	$CircleSprite/CenterContainer/Label.set("custom_colors/font_color", Color(1,1,1))
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
-	get_tree().set_input_as_handled()
 	if event is InputEventMouseButton:
-		if event.button_index == BUTTON_LEFT and event.pressed:
-			dragging = true
-		elif event.button_index == BUTTON_LEFT and !event.pressed:
-			dragging = false
+		if event.button_index == BUTTON_LEFT:
+			dragging = event.pressed
+			mousePos = get_viewport().get_mouse_position()
 		elif event.button_index == BUTTON_RIGHT and event.pressed:
 			selected()
