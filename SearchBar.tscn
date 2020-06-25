@@ -22,7 +22,6 @@ __meta__ = {
 [node name="LineEdit" type="LineEdit" parent="."]
 margin_right = 80.0
 margin_bottom = 40.0
-focus_neighbour_right = NodePath("../Button")
 focus_mode = 1
 mouse_filter = 1
 size_flags_horizontal = 3

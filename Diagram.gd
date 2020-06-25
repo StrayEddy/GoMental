@@ -11,6 +11,16 @@ func _ready():
 	selected_neuron = $MainNeuron
 	$MainNeuron.connect("is_selected", self, "neuron_is_selected")
 
+func build(root):
+	for child in root:
+		if child.is_leaf():
+			build_leaf(child, root)
+		else:
+			build(child)
+
+func build_leaf(leaf, parent):
+	pass
+
 func neuron_is_selected(neuron):
 	selected_neuron = neuron
 	$CanvasLayer/SearchBar.show()

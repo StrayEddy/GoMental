@@ -12,7 +12,8 @@ func _on_LineEdit_gui_input(event):
 	if Input.is_key_pressed(KEY_TAB):
 		autocomplete()
 	elif Input.is_key_pressed(KEY_RIGHT):
-		$Button.grab_focus()
+		if $LineEdit.caret_position == $LineEdit.text.length():
+			$Button.grab_focus()
 	elif Input.is_key_pressed(KEY_ESCAPE):
 		hide()
 	else:

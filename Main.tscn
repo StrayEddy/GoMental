@@ -1,9 +1,19 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Main.gd" type="Script" id=1]
 [ext_resource path="res://Diagram.tscn" type="PackedScene" id=2]
+[ext_resource path="res://SavePopupDialog.tscn" type="PackedScene" id=3]
+[ext_resource path="res://OpenFileDialog.tscn" type="PackedScene" id=4]
 
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
 
 [node name="Diagram" parent="." instance=ExtResource( 2 )]
+
+[node name="SavePopupDialog" parent="." instance=ExtResource( 3 )]
+margin_left = -50.0
+margin_right = 30.0
+
+[node name="OpenFileDialog" parent="." instance=ExtResource( 4 )]
+current_dir = "res://records"
+current_path = "res://records/"

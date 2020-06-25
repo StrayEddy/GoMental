@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://OpenFileDialog.gd" type="Script" id=1]
+
+[node name="OpenFileDialog" type="FileDialog"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -200.0
+margin_top = -150.0
+margin_right = 200.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+window_title = "Open a File"
+mode = 0
+script = ExtResource( 1 )
+[connection signal="confirmed" from="." to="." method="_on_OpenFileDialog_confirmed"]
+[connection signal="gui_input" from="." to="." method="_on_OpenFileDialog_gui_input"]
