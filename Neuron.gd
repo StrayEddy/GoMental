@@ -7,7 +7,7 @@ var mousein = false
 var dragging = false
 var mousePos
 var father = null
-
+var neurons = []
 
 func _ready():
 	pass # Replace with function body.

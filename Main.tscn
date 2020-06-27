@@ -8,7 +8,9 @@
 [node name="Main" type="Node"]
 script = ExtResource( 1 )
 
-[node name="Diagram" parent="." instance=ExtResource( 2 )]
+[node name="Diagram" parent="." groups=[
+"Diagram",
+] instance=ExtResource( 2 )]
 
 [node name="SavePopupDialog" parent="." instance=ExtResource( 3 )]
 margin_left = -50.0
