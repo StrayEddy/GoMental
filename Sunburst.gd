@@ -2,12 +2,37 @@ extends Node2D
 
 var node_scene = load("res://Node.tscn")
 
+#var tree = {
+#	"label": "",
+#	"children": [
+#		{
+#			"label":"depression",
+#			"children":[]
+#		},
+#		{
+#			"label":"anxiete",
+#			"children":[]
+#		}
+#	]
+#}
+
+var root
+
 var tree = {
 	"label": "",
 	"children": [
 		{
 			"label":"depression",
-			"children":[]
+			"children":[
+				{
+					"label":"exercice",
+					"children":[]
+				},
+				{
+					"label":"journal humeur",
+					"children":[]
+				}
+			]
 		},
 		{
 			"label":"anxiete",
@@ -17,7 +42,7 @@ var tree = {
 }
 
 func _ready():
-	var root = node_scene.instance()
+	root = node_scene.instance()
 	add_child(root)
 	build_tree(root, tree.label, tree.children)
 	root.update_children_angles()
@@ -33,4 +58,5 @@ func build_tree(node, label, children):
 		build_tree(subnode, child.label, child.children)
 
 func reset():
+	root.queue_free()
 	_ready()
