@@ -11,5 +11,5 @@ func _on_LineEdit_focus_exited():
 
 func _on_LineEdit_text_entered(new_text):
 	clear()
-	Global.sunburst.add_node(new_text)
+	Global.sunburst.add_node(new_text, Global.diagram.selected_node)
 	get_parent().hide()

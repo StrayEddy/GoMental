@@ -16,7 +16,7 @@ func _on_focus_exited(event):
 func _on_gui_input(event):
 	get_tree().set_input_as_handled()
 	if Input.is_key_pressed(KEY_ENTER):
-		Global.sunburst.add_node(text)
+		Global.diagram.add_node(text)
 		get_parent().hide()
 	elif Input.is_key_pressed(KEY_ESCAPE):
 		get_parent().hide()

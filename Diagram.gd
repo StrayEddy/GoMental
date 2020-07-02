@@ -19,7 +19,7 @@ func put_focus_on_line_edit():
 	$CanvasLayer/SearchBar.set_suggestions(suggestions)
 
 func add_node(text):
-	selected_node.add_node(text)
+	$Sunburst.add_node(text, selected_node)
 	$Sunburst.reset()
 	
 	# Add new term
