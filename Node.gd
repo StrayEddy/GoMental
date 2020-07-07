@@ -58,8 +58,8 @@ func add_node(label):
 	node.path = path + "/" + label
 	node.get_node("Label").text = label
 	node.level = level+1
-	node.color_unselected = color_unselected.lightened(node.level/10.0)
-	node.color_selected = color_selected.lightened(node.level/10.0)
+	node.color_unselected = color_unselected.lightened(node.level/20.0)
+	node.color_selected = color_selected.lightened(node.level/20.0)
 	node.color = node.color_unselected
 	node.connect("is_selected", Global.diagram, "node_is_selected")
 	
@@ -78,9 +78,11 @@ func update():
 	for i in range(0, nb_children):
 		var child = children[i]
 		child.start_angle = start_angle + i*(end_angle - start_angle) / nb_children
-		child.end_angle = (i+1) * end_angle / nb_children
-		child.color.g += 0.25*i
-		child.color_unselected.g += 0.25*i
+		child.end_angle = start_angle + (i+1)*(end_angle - start_angle) / nb_children
+#		child.color.g = color.g + 0.25*i
+#		child.color_unselected.g = color_unselected.g + 0.25*i
+#		print(child.label)
+#		print(child.color_unselected)
 		child.update()
 	
 	.update()

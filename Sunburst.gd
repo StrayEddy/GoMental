@@ -47,7 +47,7 @@ func _ready():
 	root = node_scene.instance()
 	add_child(root)
 	build_tree(root, tree.label, tree.children)
-	root.update()
+	update_tree()
 
 func build_tree(node, label, children):
 	var nb_children = children.size()
@@ -59,7 +59,6 @@ func build_tree(node, label, children):
 		build_tree(subnode, child.label, child.children)
 
 func add_node(label, parent_node):
-	print(parent_node.path)
 	var parent_leaf = find_leaf(tree, parent_node.path)
 	var new_leaf = {
 		"label": label,
