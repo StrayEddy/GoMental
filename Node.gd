@@ -13,16 +13,24 @@ var path = "/root"
 var level = 1
 var start_angle = 0
 var end_angle = 2*PI
-var color_selected = Color.lightblue
-var color_unselected = Color.darkblue
-var color = color_unselected
+var color_normal = Color.darkblue
+var color_hover = Color.lightblue
+var color_selected = Color.black
 
+var is_selected = false
+var is_hover = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
 
 func _draw():
+	var color = color_normal
+	if is_selected:
+		color = color_selected
+	if is_hover:
+		color = color_hover
+	
 	if level > 1:
 		draw_arc(center, level*radius, start_angle, end_angle, 2048, color, width)
 		draw_arc(center, level*radius + width/2, start_angle, end_angle, 2048, Color.white, 2.0)
@@ -64,9 +72,8 @@ func add_node(label):
 	node.path = path + "/" + label
 	node.get_node("Label").text = label
 	node.level = level+1
-	node.color_unselected = color_unselected.lightened(node.level/20.0)
-	node.color_selected = color_selected.lightened(node.level/20.0)
-	node.color = node.color_unselected
+	node.color_normal = color_normal.lightened(node.level/20.0)
+	node.color_hover = color_hover.lightened(node.level/20.0)
 	node.connect("is_selected", Global.diagram, "node_is_selected")
 	
 	add_child(node)
@@ -114,19 +121,26 @@ func build_collision_shape():
 	$Area2D/CollisionPolygon2D.polygon = points
 
 func _on_Area2D_mouse_entered():
-	color = color_selected
+	is_hover = true
 	update()
 	$Label.set("custom_colors/font_color", Color(0,0,0))
 
 func _on_Area2D_mouse_exited():
-	color = color_unselected
+	is_hover = false
 	update()
 	$Label.set("custom_colors/font_color", Color(1,1,1))
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
+	if event is InputEventMouseButton:           
 		if event.button_index == BUTTON_RIGHT and event.pressed:
+			unselect_all_nodes()
+			is_selected = true
 			emit_signal("is_selected", self)
+			
+
+func unselect_all_nodes():
+	for node in get_tree().get_nodes_in_group("Node"):
+		node.is_selected = false
 
 func set_label(text):
 	$Label.text = text
