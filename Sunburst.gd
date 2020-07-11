@@ -7,47 +7,15 @@ var root
 var tree = {
 	"label":"",
 	"path":"/root",
-	"children": [
-		{
-			"label":"depression",
-			"path":"/root/depression",
-			"children":[
-				{
-					"label":"exercice",
-					"path":"/root/depression/exercice",
-					"children":[]
-				},
-				{
-					"label":"journal_humeur",
-					"path":"/root/depression/journal_humeur",
-					"children":[]
-				}
-			]
-		},
-		{
-			"label":"anxiete",
-			"path":"/root/anxiete",
-			"children":[
-				{
-					"label":"respiration",
-					"path":"/root/anxiete/respiration",
-					"children":[]
-				},
-				{
-					"label":"meditation",
-					"path":"/root/anxiete/meditation",
-					"children":[]
-				}
-			]
-		}
-	]
+	"children": []
 }
 
 func _ready():
 	root = node_scene.instance()
+	root.connect("is_selected", Global.diagram, "node_is_selected")
 	add_child(root)
 	build_tree(root, tree.label, tree.children)
-	update_tree()
+	update_tree(tree)
 
 func build_tree(node, label, children):
 	var nb_children = children.size()
@@ -67,9 +35,10 @@ func add_node(label, parent_node):
 	}
 	parent_leaf.children.append(new_leaf)
 	parent_node.add_node(label)
-	update_tree()
+	update_tree(tree)
 
-func update_tree():
+func update_tree(tree):
+	self.tree = tree
 	print_the_tree(tree)
 	root.update()
 
@@ -91,3 +60,11 @@ func print_the_tree(tree):
 func reset():
 	root.queue_free()
 	_ready()
+
+func restart():
+	tree = {
+		"label":"",
+		"path":"/root",
+		"children": []
+	}
+	reset()

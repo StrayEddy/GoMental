@@ -28,7 +28,7 @@ func _draw():
 		draw_arc(center, level*radius + width/2, start_angle, end_angle, 2048, Color.white, 2.0)
 		draw_arc(center, level*radius - width/2, start_angle, end_angle, 2048, Color.white, 2.0)
 	else:
-		draw_arc(center, level*radius, start_angle, end_angle, 2048, color, width*2)
+		draw_arc(center, level*radius - width/2, start_angle, end_angle, 2048, color, width*2)
 		draw_arc(center, level*radius + width/2, start_angle, end_angle, 2048, Color.white, 2.0)
 	
 	if abs(end_angle-start_angle) < 2*PI:
@@ -49,6 +49,12 @@ func _draw():
 			$Label.set_rotation(middle_angle-PI/2.0)
 		else:
 			$Label.set_rotation(middle_angle+PI/2.0)
+	elif level > 1:
+		#Put label at center of arc
+		var label_pos = center + Vector2(cos(2*PI/4), sin(2*PI/4)) * (level*radius)
+		label_pos -= Vector2($Label.rect_size.x/2, $Label.rect_size.y/2)
+		$Label.rect_pivot_offset = $Label.rect_size/2
+		$Label.set_position(label_pos, false)
 	
 	build_collision_shape()
 
@@ -121,3 +127,6 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.button_index == BUTTON_RIGHT and event.pressed:
 			emit_signal("is_selected", self)
+
+func set_label(text):
+	$Label.text = text

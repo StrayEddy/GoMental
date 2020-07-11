@@ -19,3 +19,4 @@ margin_right = 30.0
 [node name="OpenFileDialog" parent="." instance=ExtResource( 4 )]
 current_dir = "res://records"
 current_path = "res://records/"
+[connection signal="file_selected" from="OpenFileDialog" to="OpenFileDialog" method="_on_OpenFileDialog_file_selected"]

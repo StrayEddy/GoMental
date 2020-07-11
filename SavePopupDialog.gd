@@ -1,7 +1,7 @@
 extends PopupDialog
 
-func _on_LineEdit_text_entered(filename):
-	Files.save(filename)
+func _on_LineEdit_text_entered(path):
+	Files.save(path)
 	$VBoxContainer/LineEdit.clear()
 	hide()
 
