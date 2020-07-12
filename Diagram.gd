@@ -38,7 +38,11 @@ func move_selection_down():
 	var children = selected_node.get_nodes()
 	if children != []:
 		selected_node = $Sunburst.select_node(children[0])
-#		reset()
+	else:
+		for node in get_tree().get_nodes_in_group("Node"):
+			if node.level == selected_node.level + 1:
+				selected_node = $Sunburst.select_node(node)
+				return
 
 func move_selection_left():
 	var siblings = []
