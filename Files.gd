@@ -33,5 +33,4 @@ func get_file_name(path):
 	var regex = RegEx.new()
 	regex.compile("^(.*)\/\/(.*)(\/..*)$")
 	var results = regex.search_all(path)
-	print(results.size())
 	return results[1].get_string()

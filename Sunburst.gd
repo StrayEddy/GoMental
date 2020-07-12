@@ -12,7 +12,6 @@ var tree = {
 
 func _ready():
 	root = node_scene.instance()
-	root.connect("is_selected", Global.diagram, "node_is_selected")
 	add_child(root)
 	build_tree(root, tree.label, tree.children)
 	update_tree(tree)
@@ -27,7 +26,7 @@ func build_tree(node, label, children):
 		build_tree(subnode, child.label, child.children)
 
 func add_node(label, parent_node):
-	var parent_leaf = find_leaf(tree, parent_node.path)
+	var parent_leaf = find_leaf(parent_node.path)
 	var new_leaf = {
 		"label": label,
 		"path": parent_node.path + "/" + label,
@@ -39,14 +38,14 @@ func add_node(label, parent_node):
 
 func update_tree(tree):
 	self.tree = tree
-	print_the_tree(tree)
+#	print_the_tree(tree)
 	root.update()
 
-func find_leaf(branch, path):
+func find_leaf(path, branch = tree):
 	if branch.path == path:
 		return branch
 	for leaf in branch.children:
-		var l = find_leaf(leaf, path)
+		var l = find_leaf(path, leaf)
 		if l != null:
 			return l
 	return null
@@ -56,6 +55,17 @@ func print_the_tree(tree):
 		print(branch.path)
 		if not branch.children.empty():
 			print_the_tree(branch)
+
+func select_node(node):
+	node.select()
+	update_tree(tree)
+	return node
+
+func select_node_with_path(path):
+	for node in get_tree().get_nodes_in_group("Node"):
+		if node.path == path:
+			select_node(node)
+
 
 func reset():
 	root.queue_free()

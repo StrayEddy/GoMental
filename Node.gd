@@ -14,11 +14,9 @@ var level = 1
 var start_angle = 0
 var end_angle = 2*PI
 var color_normal = Color.darkblue
-var color_hover = Color.lightblue
 var color_selected = Color.black
 
 var is_selected = false
-var is_hover = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -28,8 +26,6 @@ func _draw():
 	var color = color_normal
 	if is_selected:
 		color = color_selected
-	if is_hover:
-		color = color_hover
 	
 	if level > 1:
 		draw_arc(center, level*radius, start_angle, end_angle, 2048, color, width)
@@ -63,8 +59,6 @@ func _draw():
 		label_pos -= Vector2($Label.rect_size.x/2, $Label.rect_size.y/2)
 		$Label.rect_pivot_offset = $Label.rect_size/2
 		$Label.set_position(label_pos, false)
-	
-	build_collision_shape()
 
 func add_node(label):
 	var node = node_scene.instance()
@@ -73,8 +67,6 @@ func add_node(label):
 	node.get_node("Label").text = label
 	node.level = level+1
 	node.color_normal = color_normal.lightened(node.level/20.0)
-	node.color_hover = color_hover.lightened(node.level/20.0)
-	node.connect("is_selected", Global.diagram, "node_is_selected")
 	
 	add_child(node)
 	
@@ -94,8 +86,6 @@ func update():
 		child.end_angle = start_angle + (i+1)*(end_angle - start_angle) / nb_children
 #		child.color.g = color.g + 0.25*i
 #		child.color_unselected.g = color_unselected.g + 0.25*i
-#		print(child.label)
-#		print(child.color_unselected)
 		child.update()
 	
 	.update()
@@ -103,44 +93,28 @@ func update():
 
 func get_point_on_arc(radius, angle):
 	return Vector2(radius*cos(angle), radius*sin(angle))
-
-func build_collision_shape():
-	var points = PoolVector2Array()
-	var inner_r = level*radius - width/2
-	var outer_r = level*radius + width/2
-	
-	if level == 1:
-		inner_r = 0.1
-	
-	for i in range(0, 9):
-		points.append(get_point_on_arc(outer_r, start_angle + i*(end_angle-start_angle)/8.0))
-	
-	for i in range(0, 9):
-		points.append(get_point_on_arc(inner_r, end_angle - i*(end_angle-start_angle)/8.0))
-	
-	$Area2D/CollisionPolygon2D.polygon = points
-
-func _on_Area2D_mouse_entered():
-	is_hover = true
-	update()
-	$Label.set("custom_colors/font_color", Color(0,0,0))
-
-func _on_Area2D_mouse_exited():
-	is_hover = false
-	update()
-	$Label.set("custom_colors/font_color", Color(1,1,1))
-
-func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:           
-		if event.button_index == BUTTON_RIGHT and event.pressed:
-			unselect_all_nodes()
-			is_selected = true
-			emit_signal("is_selected", self)
 			
+
+func select():
+	unselect_all_nodes()
+	is_selected = true
+	return self
+
+func unselect():
+	is_selected = false
+	return self
 
 func unselect_all_nodes():
 	for node in get_tree().get_nodes_in_group("Node"):
-		node.is_selected = false
+		node.unselect()
 
 func set_label(text):
 	$Label.text = text
+
+func get_nodes():
+	var nodes = []
+	for child in get_children():
+		if child.is_in_group("Node"):
+			nodes.append(child)
+	
+	return nodes
