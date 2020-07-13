@@ -96,3 +96,6 @@ func save(name):
 	Files.save(name)
 	is_saving = false
 	$Status.text = "saved"
+
+func delete():
+	$Sunburst.delete_node(selected_node)

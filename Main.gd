@@ -3,6 +3,9 @@ extends Node
 func _process(delta):
 	if Input.is_action_just_pressed("ui_new"):
 		Global.sunburst.restart()
+	if Input.is_action_just_pressed("ui_del"):
+		if not $Diagram.is_typing:
+			$Diagram.delete()
 	if Input.is_action_just_pressed("ui_open"):
 		if not $Diagram.is_typing:
 			$Diagram.is_opening = true

@@ -36,6 +36,22 @@ func add_node(label, parent_node):
 	parent_node.add_node(label)
 	update_tree(tree)
 
+func delete_node(node):
+	if node.level > 1:
+		var parent_node = node.get_parent()
+		var parent_leaf = find_leaf(parent_node.path)
+		var leaf_index = 0
+		for i in range(0, parent_leaf.children.size()):
+			if parent_leaf.children[i].path == node.path:
+				leaf_index = i
+				break
+		parent_leaf.children.remove(leaf_index)
+		parent_node.remove_child(node)
+		node.queue_free()
+		
+		Global.diagram.selected_node = select_node(parent_node)
+		update_tree(tree)
+
 func update_tree(tree):
 	self.tree = tree
 #	print_the_tree(tree)
