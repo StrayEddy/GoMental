@@ -78,3 +78,4 @@ func restart():
 		"children": []
 	}
 	reset()
+	Global.diagram.selected_node = select_node(root)

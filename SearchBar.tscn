@@ -5,7 +5,7 @@
 [ext_resource path="res://theme.theme" type="Theme" id=3]
 [ext_resource path="res://Button.gd" type="Script" id=4]
 
-[sub_resource type="StyleBoxFlat" id=2]
+[sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 1, 1, 1, 1 )
 
 [node name="SearchBar" type="GridContainer"]
@@ -39,7 +39,7 @@ focus_mode = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_styles/focus = SubResource( 2 )
+custom_styles/focus = SubResource( 1 )
 flat = true
 script = ExtResource( 4 )
 
@@ -53,7 +53,7 @@ focus_mode = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_styles/focus = SubResource( 2 )
+custom_styles/focus = SubResource( 1 )
 flat = true
 script = ExtResource( 4 )
 
@@ -67,7 +67,7 @@ focus_mode = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_styles/focus = SubResource( 2 )
+custom_styles/focus = SubResource( 1 )
 flat = true
 script = ExtResource( 4 )
 
@@ -81,7 +81,7 @@ focus_mode = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_styles/focus = SubResource( 2 )
+custom_styles/focus = SubResource( 1 )
 flat = true
 script = ExtResource( 4 )
 
@@ -94,7 +94,7 @@ focus_mode = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 theme = ExtResource( 3 )
-custom_styles/focus = SubResource( 2 )
+custom_styles/focus = SubResource( 1 )
 flat = true
 script = ExtResource( 4 )
 [connection signal="focus_entered" from="LineEdit" to="LineEdit" method="_on_LineEdit_focus_entered"]

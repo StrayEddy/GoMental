@@ -23,10 +23,10 @@ offset = Vector2( 250, 300 )
 current = true
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 342.776
-margin_top = 13.4388
-margin_right = 507.776
-margin_bottom = 69.4388
+margin_left = 333.796
+margin_top = 543.241
+margin_right = 498.796
+margin_bottom = 599.241
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Ctrl + O:	Ouvrir
 Ctrl + N:	Nouveau
@@ -44,3 +44,12 @@ position = Vector2( 256, 300 )
 
 [node name="SearchBar" parent="CanvasLayer" instance=ExtResource( 4 )]
 visible = false
+
+[node name="Status" type="RichTextLabel" parent="."]
+margin_left = 415.0
+margin_top = 15.0
+margin_right = 497.0
+margin_bottom = 43.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

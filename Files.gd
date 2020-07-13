@@ -1,30 +1,30 @@
 extends Node
 
-var current_path = "res://records/"
+var path = "res://records/"
+var current_name
 
 func _ready():
 	pass # Replace with function body.
 
-func open(path):
+func open(name):
 	var file = File.new()
-	file.open(path, File.READ)
+	file.open(path + name, File.READ)
 	var content = file.get_as_text()
 	
-	Global.sunburst.root.set_label(get_file_name(path))
+	Global.sunburst.root.set_label(name)
 	Global.sunburst.tree = parse_json(content)
 	Global.sunburst.reset()
 #	SearchEngine.terms = []
 
-	current_path = path
+	current_name = name
 	file.close()
 
-func save(path):
+func save(name):
 	var file = File.new()
-	file.open(path, File.WRITE)
+	file.open(path + name, File.WRITE)
 	
 	var content = to_json(Global.sunburst.tree)
 #	var content = to_json(SearchEngine.terms)
-
 	
 	file.store_string(content)
 	file.close()

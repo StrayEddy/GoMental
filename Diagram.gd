@@ -4,6 +4,9 @@ const ZOOM_SENSITIVITY = Vector2(.05, .05)
 
 var selected_node
 var is_typing = false
+var is_opening = false
+var is_saving = false
+var is_renaming = false
 
 func _ready():
 	selected_node = $Sunburst.root.select()
@@ -16,11 +19,10 @@ func put_focus_on_line_edit():
 
 func add_node(text):
 	$Sunburst.add_node(text, selected_node)
-	reset()
 	
 	# Add new term
-	SearchEngine.add_term(text)
-	SearchEngine.add_suggestion(selected_node.label, text)
+#	SearchEngine.add_term(text)
+#	SearchEngine.add_suggestion(selected_node.label, text)
 
 func _input(event):
 	if event is InputEventMouseButton:
@@ -84,3 +86,13 @@ func reset():
 	selected_node = $Sunburst.select_node_with_path(path)
 	print("reset done")
 	print("path = " + selected_node.path)
+
+func open(name):
+	Files.open(name)
+	is_opening = false
+	$Status.text = "opened"
+
+func save(name):
+	Files.save(name)
+	is_saving = false
+	$Status.text = "saved"

@@ -4,15 +4,15 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_new"):
 		Global.sunburst.restart()
 	if Input.is_action_just_pressed("ui_open"):
-		$OpenFileDialog.popup()
-		var mouse_pos = $OpenFileDialog.get_global_mouse_position()
-		$OpenFileDialog.rect_position = mouse_pos
+		if not $Diagram.is_typing:
+			$Diagram.is_opening = true
+			$Diagram/Status.text = "opening..."
+			$Diagram.start_typing()
 	if Input.is_action_just_pressed("ui_save"):
-		$SavePopupDialog.popup()
-		$SavePopupDialog/VBoxContainer/LineEdit.text = Files.current_path
-		$SavePopupDialog/VBoxContainer/LineEdit.caret_position = Files.current_path.length()
-		var mouse_pos = $SavePopupDialog.get_global_mouse_position()
-		$SavePopupDialog.rect_position = mouse_pos
+		if not $Diagram.is_typing:
+			$Diagram.is_saving = true
+			$Diagram/Status.text = "saving..."
+			$Diagram.start_typing()
 	if Input.is_action_just_pressed("ui_up"):
 		if not $Diagram.is_typing:
 			$Diagram.move_selection_up()
@@ -27,6 +27,7 @@ func _process(delta):
 			$Diagram.move_selection_right()
 	if Input.is_action_just_pressed("ui_accept"):
 		if not $Diagram.is_typing:
+			$Diagram/Status.text = "adding..."
 			$Diagram.start_typing()
 		else:
 			$Diagram.accept()
