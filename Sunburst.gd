@@ -12,6 +12,7 @@ var tree = {
 
 func _ready():
 	root = node_scene.instance()
+	root.set_label(tree.label)
 	add_child(root)
 	build_tree(root, tree.label, tree.children)
 	update_tree(tree)
@@ -51,6 +52,11 @@ func delete_node(node):
 		
 		Global.diagram.selected_node = select_node(parent_node)
 		update_tree(tree)
+
+func relabel_node(node, label):
+	var leaf = find_leaf(node.path)
+	leaf.label = label
+	node.set_label(label)
 
 func update_tree(tree):
 	self.tree = tree

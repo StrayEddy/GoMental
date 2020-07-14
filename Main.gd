@@ -6,6 +6,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("ui_del"):
 		if not $Diagram.is_typing:
 			$Diagram.delete()
+	if Input.is_action_just_pressed("ui_relabel"):
+		if not $Diagram.is_typing:
+			$Diagram.is_relabeling = true
+			$Diagram/Status.text = "renaming..."
+			$Diagram.start_typing()
 	if Input.is_action_just_pressed("ui_open"):
 		if not $Diagram.is_typing:
 			$Diagram.is_opening = true

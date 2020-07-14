@@ -17,5 +17,7 @@ func _on_LineEdit_text_entered(new_text):
 		Global.diagram.save(new_text)
 	elif Global.diagram.is_opening:
 		Global.diagram.open(new_text)
+	elif Global.diagram.is_relabeling:
+		Global.diagram.relabel(new_text)
 	else:
 		Global.diagram.add_node(new_text)

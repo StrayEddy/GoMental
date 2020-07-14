@@ -6,7 +6,7 @@ var selected_node
 var is_typing = false
 var is_opening = false
 var is_saving = false
-var is_renaming = false
+var is_relabeling = false
 
 func _ready():
 	selected_node = $Sunburst.root.select()
@@ -89,6 +89,7 @@ func reset():
 
 func open(name):
 	Files.open(name)
+	selected_node = $Sunburst.root.select()
 	is_opening = false
 	$Status.text = "opened"
 
@@ -99,3 +100,8 @@ func save(name):
 
 func delete():
 	$Sunburst.delete_node(selected_node)
+
+func relabel(label):
+	is_relabeling = false
+	$Sunburst.relabel_node(selected_node, label)
+	$Status.text = "renamed"
