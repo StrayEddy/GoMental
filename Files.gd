@@ -14,7 +14,6 @@ func open(name):
 	Global.sunburst.root.set_label(name)
 	Global.sunburst.tree = parse_json(content)
 	Global.sunburst.reset()
-#	SearchEngine.terms = []
 
 	current_name = name
 	file.close()
@@ -24,7 +23,6 @@ func save(name):
 	file.open(path + name, File.WRITE)
 	
 	var content = to_json(Global.sunburst.tree)
-#	var content = to_json(SearchEngine.terms)
 	
 	file.store_string(content)
 	file.close()
@@ -34,3 +32,29 @@ func get_file_name(path):
 	regex.compile("^(.*)\/\/(.*)(\/..*)$")
 	var results = regex.search_all(path)
 	return results[1].get_string()
+
+func get_file_names():
+	var filenames = []
+	var dir = Directory.new()
+	if dir.open(path) == OK:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if not "." in file_name:
+				filenames.append(file_name)
+			file_name = dir.get_next()
+	return filenames
+
+func open_terms():
+	var file = File.new()
+	file.open(path + "terms", File.READ)
+	var content = file.get_as_text()
+	SearchEngine.terms = parse_json(content)
+	file.close()
+
+func save_terms():
+	var file = File.new()
+	file.open(path + "terms", File.WRITE)
+	var content = to_json(SearchEngine.terms)
+	file.store_string(content)
+	file.close()

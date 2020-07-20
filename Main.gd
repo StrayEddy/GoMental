@@ -39,7 +39,8 @@ func _process(delta):
 			$Diagram.start_typing()
 		else:
 			$Diagram.accept()
-
-func _unhandled_input(event):
-	if Input.is_key_pressed(KEY_ESCAPE):
-		get_tree().quit()
+	if Input.is_action_just_pressed("ui_cancel"):
+		if $Diagram.is_typing:
+			$Diagram.stop_typing()
+		else:
+			get_tree().quit()

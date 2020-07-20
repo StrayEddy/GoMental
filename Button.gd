@@ -11,3 +11,18 @@ func _on_focus_entered(event):
 
 func _on_focus_exited(event):
 	theme.set_color("font_color", "Button", Color(1,1,1))
+
+func _on_Button_gui_input(event):
+	get_tree().set_input_as_handled()
+	if not Input.is_key_pressed(KEY_ENTER):
+		return
+	get_parent().get_node("LineEdit").clear()
+	get_parent().hide()
+	if Global.diagram.is_saving:
+		Global.diagram.save(text)
+	elif Global.diagram.is_opening:
+		Global.diagram.open(text)
+	elif Global.diagram.is_relabeling:
+		Global.diagram.relabel(text)
+	else:
+		Global.diagram.add_node(text)

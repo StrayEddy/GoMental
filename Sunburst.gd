@@ -27,6 +27,7 @@ func build_tree(node, label, children):
 		build_tree(subnode, child.label, child.children)
 
 func add_node(label, parent_node):
+	print(parent_node.path)
 	var parent_leaf = find_leaf(parent_node.path)
 	var new_leaf = {
 		"label": label,
@@ -53,10 +54,22 @@ func delete_node(node):
 		Global.diagram.selected_node = select_node(parent_node)
 		update_tree(tree)
 
-func relabel_node(node, label):
+func relabel_node(node, new_label):
+	# Change the label
+	var old_label = node.label
 	var leaf = find_leaf(node.path)
-	leaf.label = label
-	node.set_label(label)
+	leaf.label = new_label
+	node.set_label(new_label)
+	
+	# Change current path and children paths
+	var new_path = node.path.replace(old_label, new_label)
+	change_path(node.path, new_path)
+
+func change_path(path, new_path, branch = tree):
+	if path in branch.path:
+		branch.path.replace(path, new_path)
+		for leaf in branch.children:
+			change_path(path, new_path, leaf)
 
 func update_tree(tree):
 	self.tree = tree

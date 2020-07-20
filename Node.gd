@@ -13,6 +13,7 @@ var path = "/root"
 var level = 1
 var start_angle = 0
 var end_angle = 2*PI
+#var color_normal = Color( 0, 0, 0.33, 1 )
 var color_normal = Color.darkblue
 var color_selected = Color.black
 

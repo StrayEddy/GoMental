@@ -68,15 +68,16 @@ func move_selection_right():
 
 func accept():
 	is_typing = false
-	$CanvasLayer/SearchBar/LineEdit.clear()
-	# Lose focus
-	$CanvasLayer/SearchBar/LineEdit.hide()
-	$CanvasLayer/SearchBar/LineEdit.show()
+	$CanvasLayer/SearchBar.clear()
+	$CanvasLayer/SearchBar.hide()
 
 func start_typing():
 	is_typing = true
 	$CanvasLayer/SearchBar.show()
 	put_focus_on_line_edit()
+	
+func stop_typing():
+	accept()
 
 func reset():
 	print("resetting...")

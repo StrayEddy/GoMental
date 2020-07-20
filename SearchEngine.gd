@@ -28,16 +28,24 @@ var terms = [
 	}
 ]
 
+func search_files_starting_with(text):
+	var files = []
+	if text != "":
+		for filename in Files.get_file_names():
+			if filename.begins_with(text):
+				files.append(filename)
+	else:
+		files = Files.get_file_names()
+	return files
+
 func search_terms_containing_label(label):
 	if label == "":
 		return terms
 	else:
 		var close_terms = []
-		
 		for term in terms:
 			if label in term.label:
 				close_terms.append(term)
-		
 		return close_terms
 
 func get_term(label):
@@ -49,12 +57,15 @@ func get_term(label):
 		return null
 
 func get_suggestions(label):
+	var suggestions = []
 	var term = get_term(label)
 	if term == null:
 		return []
 	else:
 		term.suggestions.sort_custom(SuggestionSorter, "sort_by_count")
-		return term.suggestions
+		for suggestion in term.suggestions:
+			suggestions.append(suggestion.label)
+		return suggestions
 
 func add_term(new_label):
 	var term = get_term(new_label)
