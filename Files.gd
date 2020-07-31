@@ -1,10 +1,10 @@
 extends Node
 
-var path = "res://records/"
+var path = "res://"
 var current_name
 
 func _ready():
-	pass # Replace with function body.
+	open_terms()
 
 func open(name):
 	var file = File.new()
@@ -40,7 +40,7 @@ func get_file_names():
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			if not "." in file_name:
+			if not "." in file_name and file_name != "terms":
 				filenames.append(file_name)
 			file_name = dir.get_next()
 	return filenames
@@ -49,7 +49,8 @@ func open_terms():
 	var file = File.new()
 	file.open(path + "terms", File.READ)
 	var content = file.get_as_text()
-	SearchEngine.terms = parse_json(content)
+	if content != "":
+		SearchEngine.terms = parse_json(content)
 	file.close()
 
 func save_terms():

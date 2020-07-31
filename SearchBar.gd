@@ -1,5 +1,7 @@
 extends GridContainer
 
+var suggestions = []
+
 func _ready():
 	pass
 
@@ -13,23 +15,31 @@ func _on_LineEdit_gui_input(event):
 	elif Input.is_key_pressed(KEY_ESCAPE):
 		hide()
 	else:
-		var suggestions = []
-		if Global.diagram.is_saving or Global.diagram.is_opening:
-			suggestions = SearchEngine.search_files_starting_with($LineEdit.text)
-		else:
-			var terms = SearchEngine.search_terms_containing_label($LineEdit.text)
-			for term in terms:
-				suggestions.append(term.label)
-		
-		set_suggestions(suggestions)
+		filter_suggestions()
 
 func autocomplete():
 	$LineEdit.text = $Button.text
 	$LineEdit.caret_position = $LineEdit.text.length()+1
 
-func set_suggestions(suggestions):
-	if suggestions.size() > 0 and suggestions[0] == "":
-		suggestions = suggestions.slice(1, suggestions.size()-1)
+func set_suggestions(new_suggestions):
+	if new_suggestions.size() > 0 and new_suggestions[0] == "":
+		suggestions = new_suggestions.slice(1, new_suggestions.size()-1)
+	else:
+		suggestions = new_suggestions
+	
+	filter_suggestions()
+
+func filter_suggestions():
+	var filter = $LineEdit.text
+	
+	var filtered_suggestions = []
+	if filter != "":
+		for suggestion in suggestions:
+			if filter in suggestion:
+				filtered_suggestions.append(suggestion)
+	else:
+		filtered_suggestions = suggestions
+	
 	
 	$Button.text = ""
 	$Button2.text = ""
@@ -37,16 +47,16 @@ func set_suggestions(suggestions):
 	$Button4.text = ""
 	$Button5.text = ""
 	
-	if suggestions.size() > 4:
-		$Button5.text = suggestions[4]
-	if suggestions.size() > 3:
-		$Button4.text = suggestions[3]
-	if suggestions.size() > 2:
-		$Button3.text = suggestions[2]
-	if suggestions.size() > 1:
-		$Button2.text = suggestions[1]
-	if suggestions.size() > 0:
-		$Button.text = suggestions[0]
+	if filtered_suggestions.size() > 4:
+		$Button5.text = filtered_suggestions[4]
+	if filtered_suggestions.size() > 3:
+		$Button4.text = filtered_suggestions[3]
+	if filtered_suggestions.size() > 2:
+		$Button3.text = filtered_suggestions[2]
+	if filtered_suggestions.size() > 1:
+		$Button2.text = filtered_suggestions[1]
+	if filtered_suggestions.size() > 0:
+		$Button.text = filtered_suggestions[0]
 
 func clear():
 	$LineEdit.clear()

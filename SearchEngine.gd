@@ -90,3 +90,6 @@ func add_suggestion(term_label, suggestion_label):
 	}
 	suggestions.push_back(new_suggestion)
 	return new_suggestion
+
+func save():
+	Files.save_terms()

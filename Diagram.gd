@@ -14,15 +14,20 @@ func _ready():
 func put_focus_on_line_edit():
 	$CanvasLayer/SearchBar/LineEdit.clear()
 	$CanvasLayer/SearchBar/LineEdit.grab_focus()
-	var suggestions = SearchEngine.get_suggestions(selected_node.label)
+	var suggestions = []
+	if Global.diagram.is_saving or Global.diagram.is_opening:
+		suggestions = SearchEngine.search_files_starting_with($CanvasLayer/SearchBar/LineEdit.text)
+	else:
+		suggestions = SearchEngine.get_suggestions(selected_node.label)
 	$CanvasLayer/SearchBar.set_suggestions(suggestions)
 
 func add_node(text):
 	$Sunburst.add_node(text, selected_node)
 	
 	# Add new term
-#	SearchEngine.add_term(text)
-#	SearchEngine.add_suggestion(selected_node.label, text)
+	SearchEngine.add_term(text)
+	SearchEngine.add_suggestion(selected_node.label, text)
+	SearchEngine.save()
 
 func _input(event):
 	if event is InputEventMouseButton:

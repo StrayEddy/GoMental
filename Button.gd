@@ -14,7 +14,7 @@ func _on_focus_exited(event):
 
 func _on_Button_gui_input(event):
 	get_tree().set_input_as_handled()
-	if not Input.is_key_pressed(KEY_ENTER):
+	if not Input.is_action_just_pressed("ui_accept"):
 		return
 	get_parent().get_node("LineEdit").clear()
 	get_parent().hide()
