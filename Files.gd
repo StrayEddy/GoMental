@@ -1,6 +1,6 @@
 extends Node
 
-var path = "res://"
+var path = "user://"
 var current_name
 
 func _ready():
@@ -40,14 +40,14 @@ func get_file_names():
 		dir.list_dir_begin()
 		var file_name = dir.get_next()
 		while file_name != "":
-			if not "." in file_name and file_name != "terms":
+			if file_name != "." and file_name != ".." and file_name != "terms.txt":
 				filenames.append(file_name)
 			file_name = dir.get_next()
 	return filenames
 
 func open_terms():
 	var file = File.new()
-	file.open(path + "terms", File.READ)
+	file.open(path + "terms.txt", File.READ)
 	var content = file.get_as_text()
 	if content != "":
 		SearchEngine.terms = parse_json(content)
@@ -55,7 +55,7 @@ func open_terms():
 
 func save_terms():
 	var file = File.new()
-	file.open(path + "terms", File.WRITE)
+	file.open(path + "terms.txt", File.WRITE)
 	var content = to_json(SearchEngine.terms)
 	file.store_string(content)
 	file.close()
