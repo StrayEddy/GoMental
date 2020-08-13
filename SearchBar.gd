@@ -35,7 +35,7 @@ func filter_suggestions():
 	var filtered_suggestions = []
 	if filter != "":
 		for suggestion in suggestions:
-			if filter in suggestion:
+			if filter.to_lower() in suggestion.to_lower():
 				filtered_suggestions.append(suggestion)
 	else:
 		filtered_suggestions = suggestions

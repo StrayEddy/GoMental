@@ -14,13 +14,6 @@ class SuggestionSorter:
 		else:
 			return false
 
-class TermSearcher:
-	static func bsearch(a, val):
-		if a.label == val:
-			return true
-		else:
-			return false
-
 var terms = [
 	{
 		"label": "",
@@ -44,7 +37,7 @@ func search_terms_containing_label(label):
 	else:
 		var close_terms = []
 		for term in terms:
-			if label in term.label:
+			if label.to_lower() in term.label.to_lower():
 				close_terms.append(term)
 		return close_terms
 
@@ -64,7 +57,7 @@ func get_suggestions(label):
 	else:
 		term.suggestions.sort_custom(SuggestionSorter, "sort_by_count")
 		for suggestion in term.suggestions:
-			suggestions.append(suggestion.label)
+			suggestions.append(suggestion.label.to_lower())
 		return suggestions
 
 func add_term(new_label):
@@ -81,12 +74,12 @@ func add_suggestion(term_label, suggestion_label):
 	var suggestions = get_term(term_label).suggestions
 	
 	for suggestion in suggestions:
-		if suggestion.label == suggestion_label:
+		if suggestion.label.to_lower() == suggestion_label.to_lower():
 			suggestion.count += 1
 			return suggestion
 	
 	var new_suggestion = {
-		"label": suggestion_label, "count": 1
+		"label": suggestion_label.to_lower(), "count": 1
 	}
 	suggestions.push_back(new_suggestion)
 	return new_suggestion

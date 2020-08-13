@@ -21,8 +21,8 @@ var is_selected = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
-
+	z_as_relative = false
+	z_index = 10-level
 func _draw():
 	var color = color_normal
 	if is_selected:
@@ -43,6 +43,9 @@ func _draw():
 		var p3 = center + Vector2(cos(end_angle), sin(end_angle)) * (level*radius-width/2)
 		var p4 = center + Vector2(cos(end_angle), sin(end_angle)) * (level*radius+width/2)
 		draw_line(p3, p4, Color.white, 2.0)
+		
+		#Find size for label (based on arc size)
+		$Label.set_size(Vector2(p1.distance_to(p3), p1.distance_to(p2)))
 		
 		#Put label at center of arc
 		var middle_angle = start_angle + (end_angle-start_angle)/2.0
